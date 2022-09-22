@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     use HasFactory;
+
+    public function rekenings()
+    {
+        return $this->belongsToMany(Rekening::class);
+    }
+
+    protected $fillable = [
+        'nama',
+        'harga'
+    ];
 }

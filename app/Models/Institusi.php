@@ -14,6 +14,11 @@ class Institusi extends Model
         return $this->hasMany(TahunPelajaran::class);
     }
 
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
     protected $fillable = [
         'nama',
         'group_id',

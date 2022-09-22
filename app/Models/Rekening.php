@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Rekening extends Model
 {
     use HasFactory;
+
+    public function items()
+    {
+        return $this->belongsToMany(Item::class);
+    }
+
+    public function kelas()
+    {
+        return $this->belongsToMany(Kelas::class);
+    }
+
+    protected $fillable = [
+        'nama',
+        'jenis'
+    ];
 }
