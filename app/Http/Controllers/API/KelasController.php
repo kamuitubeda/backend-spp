@@ -4,11 +4,11 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
-use App\Models\Institusi;
+use App\Models\Kelas;
 use Validator;
-use App\Http\Resources\InstitusiResource;
+use App\Http\Resources\KelasResource;
 
-class InstitusiController extends BaseController
+class KelasController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class InstitusiController extends BaseController
      */
     public function index()
     {
-        $institusis = Institusi::all();
+        $kelas = Kelas::all();
       
-        return $this->sendResponse(InstitusiResource::collection($institusis), 'Institusis retrieved successfully.');
+        return $this->sendResponse(KelasResource::collection($kelas), 'Kelas retrieved successfully.');
     }
 
     /**
@@ -40,36 +40,36 @@ class InstitusiController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());       
         }
      
-        $institusi = Institusi::create($input);
+        $kela = Kelas::create($input);
      
-        return $this->sendResponse(new InstitusiResource($institusi), 'Institusi created successfully.');
+        return $this->sendResponse(new KelasResource($kela), 'Kelas created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Institusi  $institusi
+     * @param  \App\Models\Kelas  $kela
      * @return \Illuminate\Http\Response
      */
-    public function show(Institusi $institusi)
+    public function show(Kelas $kela)
     {
-        $institusi = Institusi::find($id);
+        $kela = Kelas::find($id);
     
-        if (is_null($institusi)) {
-            return $this->sendError('Institusi not found.');
+        if (is_null($kela)) {
+            return $this->sendError('Kelas not found.');
         }
      
-        return $this->sendResponse(new InstitusiResource($institusi), 'Institusi retrieved successfully.');
+        return $this->sendResponse(new KelasResource($kela), 'Kelas retrieved successfully.');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Institusi  $institusi
+     * @param  \App\Models\Kelas  $kela
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Institusi $institusi)
+    public function update(Request $request, Kelas $kela)
     {
         $input = $request->all();
      
@@ -81,26 +81,26 @@ class InstitusiController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());       
         }
      
-        $institusi->nama = $input['nama'];
-        $institusi->kode = $input['kode'];
-        $institusi->alamat = $input['alamat'];
-        $institusi->website = $input['website'];
-        $institusi->telepon = $input['telepon'];
-        $institusi->save();
+        $kela->nama = $input['nama'];
+        $kela->kode = $input['kode'];
+        $kela->alamat = $input['alamat'];
+        $kela->website = $input['website'];
+        $kela->telepon = $input['telepon'];
+        $kela->save();
      
-        return $this->sendResponse(new InstitusiResource($institusi), 'Institusi updated successfully.');
+        return $this->sendResponse(new KelasResource($kela), 'Kelas updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Institusi  $institusi
+     * @param  \App\Models\Kelas  $kela
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Institusi $institusi)
+    public function destroy(Kelas $kela)
     {
-        $institusi->delete();
+        $kela->delete();
      
-        return $this->sendResponse([], 'Institusi deleted successfully.');
+        return $this->sendResponse([], 'Kelas deleted successfully.');
     }
 }

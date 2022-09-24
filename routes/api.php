@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\InstitusiController; 
+use App\Http\Controllers\API\KelasController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:api')->group( function () {
     Route::resource('institusis', InstitusiController::class);
+    Route::resource('kelas', KelasController::class);
 });
