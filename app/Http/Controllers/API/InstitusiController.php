@@ -51,7 +51,7 @@ class InstitusiController extends BaseController
      * @param  \App\Models\Institusi  $institusi
      * @return \Illuminate\Http\Response
      */
-    public function show(Institusi $institusi)
+    public function show($id)
     {
         $institusi = Institusi::find($id);
     

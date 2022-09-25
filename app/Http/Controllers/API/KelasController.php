@@ -40,26 +40,26 @@ class KelasController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());       
         }
      
-        $kela = Kelas::create($input);
+        $kelas = Kelas::create($input);
      
-        return $this->sendResponse(new KelasResource($kela), 'Kelas created successfully.');
+        return $this->sendResponse(new KelasResource($kelas), 'Kelas created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Kelas  $kela
+     * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function show(Kelas $kela)
+    public function show($id)
     {
-        $kela = Kelas::find($id);
+        $kelas = Kelas::find($id);
     
-        if (is_null($kela)) {
+        if (is_null($kelas)) {
             return $this->sendError('Kelas not found.');
         }
      
-        return $this->sendResponse(new KelasResource($kela), 'Kelas retrieved successfully.');
+        return $this->sendResponse(new KelasResource($kelas), 'Kelas retrieved successfully.');
     }
 
     /**
@@ -69,37 +69,35 @@ class KelasController extends BaseController
      * @param  \App\Models\Kelas  $kela
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kelas $kela)
+    public function update(Request $request, Kelas $kelas)
     {
         $input = $request->all();
      
         $validator = Validator::make($input, [
-            'nama' => 'required'
+            'jenjang' => 'required'
         ]);
      
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
      
-        $kela->nama = $input['nama'];
-        $kela->kode = $input['kode'];
-        $kela->alamat = $input['alamat'];
-        $kela->website = $input['website'];
-        $kela->telepon = $input['telepon'];
-        $kela->save();
+        $kelas->jenjang = $input['jenjang'];
+        $kelas->ruang = $input['ruang'];
+        $kelas->nama = $input['nama'];
+        $kelas->save();
      
-        return $this->sendResponse(new KelasResource($kela), 'Kelas updated successfully.');
+        return $this->sendResponse(new KelasResource($kelas), 'Kelas updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Kelas  $kela
+     * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kelas $kela)
+    public function destroy(Kelas $kelas)
     {
-        $kela->delete();
+        $kelas->delete();
      
         return $this->sendResponse([], 'Kelas deleted successfully.');
     }

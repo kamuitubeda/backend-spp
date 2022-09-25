@@ -31,8 +31,8 @@ class TahunPelajaranController extends Controller
         $input = $request->all();
      
         $validator = Validator::make($input, [
-            'name' => 'required',
-            'detail' => 'required'
+            'nama' => 'required',
+            'institusi_id' => 'required'
         ]);
      
         if($validator->fails()){
@@ -50,7 +50,7 @@ class TahunPelajaranController extends Controller
      * @param  \App\Models\TahunPelajaran  $tahunPelajaran
      * @return \Illuminate\Http\Response
      */
-    public function show(TahunPelajaran $tahunPelajaran)
+    public function show($id)
     {
         $tahunPelajaran = TahunPelajaran::find($id);
     
@@ -73,7 +73,8 @@ class TahunPelajaranController extends Controller
         $input = $request->all();
      
         $validator = Validator::make($input, [
-            'nama' => 'required'
+            'nama' => 'required',
+            'institusi_id' => 'required'
         ]);
      
         if($validator->fails()){
@@ -83,7 +84,7 @@ class TahunPelajaranController extends Controller
         $tahunPelajaran->nama = $input['nama'];
         $tahunPelajaran->save();
      
-        return $this->sendResponse(new InstitusiResource($tahunPelajaran), 'Institusi updated successfully.');
+        return $this->sendResponse(new TahunPelajaranResource($tahunPelajaran), 'TahunPelajaran updated successfully.');
     }
 
     /**
