@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Item;
+use App\Models\Group;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller
+class GroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $item = Item::all();
+        $group = Group::all();
       
-        return $this->sendResponse(ItemResource::collection($item), 'Item retrieved successfully.');
+        return $this->sendResponse(GroupResource::collection($group), 'Group retrieved successfully.');
     }
 
     /**
@@ -31,73 +31,70 @@ class ItemController extends Controller
         $input = $request->all();
      
         $validator = Validator::make($input, [
-            'nama' => 'required',
-            'harga' => 'required'
+            'nama' => 'required'
         ]);
      
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
      
-        $item = Item::create($input);
+        $group = Group::create($input);
      
-        return $this->sendResponse(new ItemResource($item), 'Item created successfully.');
+        return $this->sendResponse(new GroupResource($group), 'Group created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Group  $group
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $item = Item::find($id);
+        $group = Group::find($id);
     
-        if (is_null($item)) {
-            return $this->sendError('Item not found.');
+        if (is_null($group)) {
+            return $this->sendError('Group not found.');
         }
      
-        return $this->sendResponse(new ItemResource($item), 'Item retrieved successfully.');
+        return $this->sendResponse(new GroupResource($group), 'Group retrieved successfully.');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Item $item)
+    public function update(Request $request, Group $group)
     {
         $input = $request->all();
      
         $validator = Validator::make($input, [
-            'nama' => 'required',
-            'harga' => 'required'
+            'nama' => 'required'
         ]);
      
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
      
-        $item->nama = $input['nama'];
-        $item->harga = $input['harga'];
-        $item->save();
+        $group->nama = $input['nama'];
+        $group->save();
      
-        return $this->sendResponse(new ItemResource($item), 'Item updated successfully.');
+        return $this->sendResponse(new GroupResource($group), 'Group updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy(Group $group)
     {
-        $item->delete();
+        $group->delete();
      
-        return $this->sendResponse([], 'Item deleted successfully.');
+        return $this->sendResponse([], 'Group deleted successfully.');
     }
 }

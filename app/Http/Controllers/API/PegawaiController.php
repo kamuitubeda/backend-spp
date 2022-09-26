@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Item;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller
+class PegawaiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $item = Item::all();
+        $pegawai = Pegawai::all();
       
-        return $this->sendResponse(ItemResource::collection($item), 'Item retrieved successfully.');
+        return $this->sendResponse(PegawaiResource::collection($pegawai), 'Pegawai retrieved successfully.');
     }
 
     /**
@@ -32,72 +32,73 @@ class ItemController extends Controller
      
         $validator = Validator::make($input, [
             'nama' => 'required',
-            'harga' => 'required'
+            'aktif' => 'required'
         ]);
      
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
      
-        $item = Item::create($input);
+        $pegawai = Pegawai::create($input);
      
-        return $this->sendResponse(new ItemResource($item), 'Item created successfully.');
+        return $this->sendResponse(new PegawaiResource($pegawai), 'Pegawai created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Pegawai  $pegawai
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $item = Item::find($id);
+        $pegawai = Pegawai::find($id);
     
-        if (is_null($item)) {
-            return $this->sendError('Item not found.');
+        if (is_null($pegawai)) {
+            return $this->sendError('Pegawai not found.');
         }
      
-        return $this->sendResponse(new ItemResource($item), 'Item retrieved successfully.');
+        return $this->sendResponse(new PegawaiResource($pegawai), 'Pegawai retrieved successfully.');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Pegawai  $pegawai
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Item $item)
+    public function update(Request $request, Pegawai $pegawai)
     {
         $input = $request->all();
      
         $validator = Validator::make($input, [
             'nama' => 'required',
-            'harga' => 'required'
+            'aktif' => 'required'
         ]);
      
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
      
-        $item->nama = $input['nama'];
-        $item->harga = $input['harga'];
-        $item->save();
+        $pegawai->nama = $input['nama'];
+        $pegawai->jabatan = $input['jabatan'];
+        $pegawai->aktif = $input['aktif'];
+        $pegawai->save();
      
-        return $this->sendResponse(new ItemResource($item), 'Item updated successfully.');
+        return $this->sendResponse(new PegawaiResource($pegawai), 'Pegawai updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Pegawai  $pegawai
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy(Pegawai $pegawai)
     {
-        $item->delete();
+        $pegawai->delete();
      
-        return $this->sendResponse([], 'Item deleted successfully.');
+        return $this->sendResponse([], 'Pegawai deleted successfully.');
     }
 }
