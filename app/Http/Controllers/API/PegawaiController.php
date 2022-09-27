@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Pegawai;
+use Validator;
+use App\Http\Resources\SantriResource;
 use Illuminate\Http\Request;
 
-class PegawaiController extends Controller
+class PegawaiController extends BaseController
 {
     /**
      * Display a listing of the resource.

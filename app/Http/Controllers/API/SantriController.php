@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Santri;
+use Validator;
+use App\Http\Resources\SantriResource;
 use Illuminate\Http\Request;
 
-class SantriController extends Controller
+class SantriController extends BaseController
 {
     /**
      * Display a listing of the resource.

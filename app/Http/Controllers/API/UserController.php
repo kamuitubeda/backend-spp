@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\User;
+use Validator;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -102,5 +105,29 @@ class UserController extends Controller
         $user->delete();
      
         return $this->sendResponse([], 'User deleted successfully.');
+    }
+
+    public function getUserInfo(Request $request)
+    {
+        $user = $request->user();
+        return $this->sendResponse(new UserResource($user), 'User retrieved successfully.');
+    }
+
+    public function logout(Request $request)
+    {
+        if (Auth::user()) {
+            $user = Auth::user()->token();
+            $user->revoke();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Logout successfully'
+            ]);
+        } else {
+            return response()->json([
+            'success' => false,
+            'message' => 'Unable to Logout'
+            ]);
+        }
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\InstitusiController; 
 use App\Http\Controllers\API\KelasController; 
-
+use App\Http\Controllers\API\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,11 +21,10 @@ use App\Http\Controllers\API\KelasController;
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [RegisterController::class, 'login']);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::middleware('auth:api')->group( function () {
+    Route::get('/user', [UserController::class, 'getUserInfo']);
+    Route::post('logout', [UserController::class, 'logout']);
+
     Route::resource('institusis', InstitusiController::class);
     Route::resource('kelas', KelasController::class);
 });
