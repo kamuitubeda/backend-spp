@@ -33,7 +33,8 @@ class KelasController extends BaseController
         $input = $request->all();
      
         $validator = Validator::make($input, [
-            'nama' => 'required'
+            'jenjang' => 'required',
+            'ruang' => 'required'
         ]);
      
         if($validator->fails()){
@@ -83,7 +84,6 @@ class KelasController extends BaseController
      
         $kelas->jenjang = $input['jenjang'];
         $kelas->ruang = $input['ruang'];
-        $kelas->nama = $input['nama'];
         $kelas->save();
      
         return $this->sendResponse(new KelasResource($kelas), 'Kelas updated successfully.');

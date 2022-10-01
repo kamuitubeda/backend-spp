@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\InstitusiController; 
 use App\Http\Controllers\API\KelasController; 
+use App\Http\Controllers\API\SantriController; 
+use App\Http\Controllers\API\TagihanController; 
+use App\Http\Controllers\API\RekeningController; 
+use App\Http\Controllers\API\RincianRekeningController; 
 use App\Http\Controllers\API\UserController;
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +31,8 @@ Route::middleware('auth:api')->group( function () {
 
     Route::resource('institusis', InstitusiController::class);
     Route::resource('kelas', KelasController::class);
+    Route::resource('santri', SantriController::class);
+    Route::resource('tagihan', TagihanController::class);
+    Route::resource('rekening', TekeningController::class);
+    Route::resource('rincianRekening', RincianRekeningController::class);
 });
