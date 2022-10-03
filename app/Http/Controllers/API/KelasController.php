@@ -54,7 +54,7 @@ class KelasController extends BaseController
      */
     public function show($id)
     {
-        $kelas = Kelas::find($id);
+        $kelas = Kelas::findOrFail($id);
     
         if (is_null($kelas)) {
             return $this->sendError('Kelas not found.');
@@ -70,12 +70,14 @@ class KelasController extends BaseController
      * @param  \App\Models\Kelas  $kela
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kelas $kelas)
+    public function update(Request $request, $id)
     {
         $input = $request->all();
+        $kelas = Kelas::findOrFail($id);
      
         $validator = Validator::make($input, [
-            'jenjang' => 'required'
+            'jenjang' => 'required',
+            'ruang' => 'required'
         ]);
      
         if($validator->fails()){
@@ -95,10 +97,11 @@ class KelasController extends BaseController
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kelas $kelas)
+    public function destroy($id)
     {
+        $kelas = Kelas::findOrFail($id);
         $kelas->delete();
-     
-        return $this->sendResponse([], 'Kelas deleted successfully.');
+   
+        return $this->sendResponse([], 'Kelas Deleted Successfully.');
     }
 }

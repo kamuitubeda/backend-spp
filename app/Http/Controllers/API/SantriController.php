@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Santri;
 use Validator;
 use App\Http\Resources\SantriResource;
-use Illuminate\Http\Request;
 
 class SantriController extends BaseController
 {
@@ -57,7 +57,7 @@ class SantriController extends BaseController
      */
     public function show($id)
     {
-        $santri = Santri::find($id);
+        $santri = Santri::findOrFail($id);
     
         if (is_null($santri)) {
             return $this->sendError('Santri not found.');
@@ -70,12 +70,13 @@ class SantriController extends BaseController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Santri  $santri
+     * @param  \App\Models\Santri  $kela
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Santri $santri)
+    public function update(Request $request, $id)
     {
         $input = $request->all();
+        $santri = Santri::findOrFail($id);
      
         $validator = Validator::make($input, [
             'nomor_induk' => 'required',
@@ -89,13 +90,8 @@ class SantriController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());       
         }
      
-        $santri->nomor_induk = $input['nomor_induk'];
-        $santri->nama = $input['nama'];
-        $santri->alamat = $input['alamat'];
-        $santri->telepon = $input['telepon'];
-        $santri->nama_wali = $input['nama_wali'];
-        $santri->aktif = $input['aktif'];
-        $santri->kelas_id = $input['kelas_id'];
+        $santri->jenjang = $input['jenjang'];
+        $santri->ruang = $input['ruang'];
         $santri->save();
      
         return $this->sendResponse(new SantriResource($santri), 'Santri updated successfully.');
@@ -107,10 +103,11 @@ class SantriController extends BaseController
      * @param  \App\Models\Santri  $santri
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Santri $santri)
+    public function destroy($id)
     {
+        $santri = Santri::findOrFail($id);
         $santri->delete();
-     
-        return $this->sendResponse([], 'Santri deleted successfully.');
+   
+        return $this->sendResponse([], 'Santri Deleted Successfully.');
     }
 }
