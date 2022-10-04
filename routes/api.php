@@ -29,6 +29,8 @@ Route::middleware('auth:api')->group( function () {
     Route::get('/user', [UserController::class, 'getUserInfo']);
     Route::post('logout', [UserController::class, 'logout']);
 
+    Route::get('/santri/kelas/{id}', [SantriController::class, 'getSantriFromSpecificKelas']);
+
     Route::resource('institusis', InstitusiController::class);
     Route::resource('kelas', KelasController::class);
     Route::resource('santri', SantriController::class);

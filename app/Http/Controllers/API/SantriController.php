@@ -110,4 +110,10 @@ class SantriController extends BaseController
    
         return $this->sendResponse([], 'Santri Deleted Successfully.');
     }
+
+    public function getSantriFromSpecificKelas($id)
+    {
+        $santri = Santri::where('kelas_id', $id)->get();
+        return $this->sendResponse(new SantriResource($santri), 'Santri retrieved successfully.');
+    }
 }
