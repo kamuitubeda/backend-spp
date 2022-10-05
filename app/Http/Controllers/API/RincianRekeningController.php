@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\RincianRekening;
 use Validator;
-use App\Http\Resources\SantriResource;
+use App\Http\Resources\RincianRekeningResource;
 use Illuminate\Http\Request;
 
 class RincianRekeningController extends BaseController
@@ -69,9 +69,10 @@ class RincianRekeningController extends BaseController
      * @param  \App\Models\RincianRekening  $rincianRekening
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RincianRekening $rincianRekening)
+    public function update(Request $request, $id)
     {
         $input = $request->all();
+        $rekening = Rekening::findOrFail($id);
      
         $validator = Validator::make($input, [
             'rekening_id' => 'required'
@@ -94,9 +95,10 @@ class RincianRekeningController extends BaseController
      * @param  \App\Models\RincianRekening  $rincianRekening
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RincianRekening $rincianRekening)
+    public function destroy($id)
     {
-        $rincianRekening->delete();
+        $rincian = RincianRekening::findOrFail($id);
+        $rincian->delete();
      
         return $this->sendResponse([], 'Rincian Rekening deleted successfully.');
     }

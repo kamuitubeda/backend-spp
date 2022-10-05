@@ -37,6 +37,6 @@ Route::middleware('auth:api')->group( function () {
     Route::resource('kelas', KelasController::class);
     Route::resource('santri', SantriController::class);
     Route::resource('tagihan', TagihanController::class);
-    Route::resource('rekening', TekeningController::class);
-    Route::resource('rincianRekening', RincianRekeningController::class);
+    Route::resource('rekening', RekeningController::class);
+    Route::resource('rincian-rekening', RincianRekeningController::class);
 });

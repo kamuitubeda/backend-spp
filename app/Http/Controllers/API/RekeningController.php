@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Rekening;
 use Validator;
-use App\Http\Resources\SantriResource;
+use App\Http\Resources\RekeningResource;
 use Illuminate\Http\Request;
 
 class RekeningController extends BaseController
@@ -54,7 +54,7 @@ class RekeningController extends BaseController
      */
     public function show($id)
     {
-        $rekening = Rekening::find($id);
+        $rekening = Rekening::findOrFail($id);
     
         if (is_null($rekening)) {
             return $this->sendError('Rekening not found.');
@@ -70,9 +70,10 @@ class RekeningController extends BaseController
      * @param  \App\Models\Rekening  $rekening
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rekening $rekening)
+    public function update(Request $request, $id)
     {
         $input = $request->all();
+        $rekening = Rekening::findOrFail($id);
      
         $validator = Validator::make($input, [
             'nama' => 'required',
@@ -96,8 +97,9 @@ class RekeningController extends BaseController
      * @param  \App\Models\Rekening  $rekening
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rekening $rekening)
+    public function destroy($id)
     {
+        $rekening = Rekening::findOrFail($id);
         $rekening->delete();
      
         return $this->sendResponse([], 'Rekening deleted successfully.');
