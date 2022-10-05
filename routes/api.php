@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\RegisterController;
+use App\Http\Controllers\API\ItemController; 
 use App\Http\Controllers\API\InstitusiController; 
 use App\Http\Controllers\API\KelasController; 
 use App\Http\Controllers\API\SantriController; 
@@ -31,7 +32,8 @@ Route::middleware('auth:api')->group( function () {
 
     Route::get('/santri/kelas/{id}', [SantriController::class, 'getSantriFromSpecificKelas']);
 
-    Route::resource('institusis', InstitusiController::class);
+    Route::resource('item', ItemController::class);
+    Route::resource('institusi', InstitusiController::class);
     Route::resource('kelas', KelasController::class);
     Route::resource('santri', SantriController::class);
     Route::resource('tagihan', TagihanController::class);

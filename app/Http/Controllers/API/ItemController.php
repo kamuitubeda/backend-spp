@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Item;
 use Validator;
-use App\Http\Resources\SantriResource;
+use App\Http\Resources\ItemResource;
 use Illuminate\Http\Request;
 
 class ItemController extends BaseController
@@ -54,7 +54,7 @@ class ItemController extends BaseController
      */
     public function show($id)
     {
-        $item = Item::find($id);
+        $item = Item::findOrFail($id);
     
         if (is_null($item)) {
             return $this->sendError('Item not found.');
@@ -70,9 +70,10 @@ class ItemController extends BaseController
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Item $item)
+    public function update(Request $request, $id)
     {
         $input = $request->all();
+        $item = Santri::findOrFail($id);
      
         $validator = Validator::make($input, [
             'nama' => 'required',
@@ -96,8 +97,9 @@ class ItemController extends BaseController
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy($id)
     {
+        $item = Item::findOrFail($id);
         $item->delete();
      
         return $this->sendResponse([], 'Item deleted successfully.');
