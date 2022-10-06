@@ -104,4 +104,14 @@ class RekeningController extends BaseController
      
         return $this->sendResponse([], 'Rekening deleted successfully.');
     }
+
+    public function getItemByRekening($id)
+    {
+        $rekening = Rekening::join('rincian_rekenings', 'rincian_rekenings.rekening_id', '=', 'rekenings.id')
+                        ->join('items', 'items.id', '=', 'rincian_rekenings.item_id')
+                        ->where('rekenings.id', $id)
+                        ->get(['rekenings.*', 'items.nama as nama_item', 'items.harga']);
+
+        return $this->sendResponse(new RekeningResource($rekening), 'Rekening retrieved successfully.');
+    }
 }

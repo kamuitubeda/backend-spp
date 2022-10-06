@@ -31,6 +31,7 @@ Route::middleware('auth:api')->group( function () {
     Route::post('logout', [UserController::class, 'logout']);
 
     Route::get('/santri/kelas/{id}', [SantriController::class, 'getSantriFromSpecificKelas']);
+    Route::get('/item/rekening/{id}', [RekeningController::class, 'getItemByRekening']);
 
     Route::resource('item', ItemController::class);
     Route::resource('institusi', InstitusiController::class);
