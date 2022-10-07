@@ -114,4 +114,16 @@ class RekeningController extends BaseController
 
         return $this->sendResponse(new RekeningResource($rekening), 'Rekening retrieved successfully.');
     }
+
+    public function getRekeningWithTotal()
+    {
+        $rekening = Rekening::select("rekenings.*")
+                            ->selectRaw("ifnull(sum(items.harga),0) as total") 
+                            ->leftJoin('rincian_rekenings', 'rincian_rekenings.rekening_id', '=', 'rekenings.id')
+                            ->leftJoin('items', 'items.id', '=', 'rincian_rekenings.item_id')
+                            ->groupBy("rekenings.id")
+                            ->get();
+
+        return $this->sendResponse(new RekeningResource($rekening), 'Rekening retrieved successfully.');
+    }
 }

@@ -104,4 +104,28 @@ class ItemController extends BaseController
      
         return $this->sendResponse([], 'Item deleted successfully.');
     }
+
+    public function selectedRekeningItem($id)
+    {
+        $item = Item::join('rincian_rekenings', 'rincian_rekenings.item_id', '=', 'items.id')
+                        ->join('rekenings', 'rekenings.id', '=', 'rincian_rekenings.rekening_id')
+                        ->where('rekenings.id', $id)
+                        ->get(['items.*']);
+        
+        return $this->sendResponse(new ItemResource($item), 'Item retrieved successfully.');
+    }
+
+    public function optionRekeningItem($id)
+    {
+        $selected = Item::select('items.id')
+                        ->join('rincian_rekenings', 'rincian_rekenings.item_id', '=', 'items.id')
+                        ->join('rekenings', 'rekenings.id', '=', 'rincian_rekenings.rekening_id')
+                        ->where('rekenings.id', $id)
+                        ->get()->toArray();
+        
+        $item = Item::whereNotIn('id', $selected)
+                        ->get();
+        
+        return $this->sendResponse(new ItemResource($item), 'Item retrieved successfully.');
+    }
 }

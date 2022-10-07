@@ -90,8 +90,12 @@ class SantriController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());       
         }
      
-        $santri->jenjang = $input['jenjang'];
-        $santri->ruang = $input['ruang'];
+        $santri->kelas_id = $input['kelas_id'];
+        $santri->nomor_induk = $input['nomor_induk'];
+        $santri->nama = $input['nama'];
+        $santri->alamat = $input['alamat'];
+        $santri->telepon = $input['telepon'];
+        $santri->aktif = $input['aktif'];
         $santri->save();
      
         return $this->sendResponse(new SantriResource($santri), 'Santri updated successfully.');

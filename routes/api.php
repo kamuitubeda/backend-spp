@@ -31,7 +31,12 @@ Route::middleware('auth:api')->group( function () {
     Route::post('logout', [UserController::class, 'logout']);
 
     Route::get('/santri/kelas/{id}', [SantriController::class, 'getSantriFromSpecificKelas']);
+    
+    Route::get('/rekening-total/', [RekeningController::class, 'getRekeningWithTotal']);
     Route::get('/item/rekening/{id}', [RekeningController::class, 'getItemByRekening']);
+    Route::get('/item/selected/{id}', [ItemController::class, 'selectedRekeningItem']);
+    Route::get('/item/option/{id}', [ItemController::class, 'optionRekeningItem']);
+    Route::delete('/rincian-rekening/r/{rekeningId}/i/{itemId}', [RincianRekeningController::class, 'removeByRekeningIdAndItem']);
 
     Route::resource('item', ItemController::class);
     Route::resource('institusi', InstitusiController::class);
