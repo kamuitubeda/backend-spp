@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Penagihan;
+use App\Models\Rekening;
 use Validator;
 use App\Http\Resources\PenagihanResource;
+use App\Http\Resources\RekeningResource;
 use Illuminate\Http\Request;
 
 class PenagihanController extends BaseController
@@ -72,7 +74,7 @@ class PenagihanController extends BaseController
     public function update(Request $request, $id)
     {
         $input = $request->all();
-        $penagihan = Rekening::findOrFail($id);
+        $penagihan = Penagihan::findOrFail($id);
      
         $validator = Validator::make($input, [
             'rekening_id' => 'required'
@@ -101,6 +103,18 @@ class PenagihanController extends BaseController
         $rincian->delete();
      
         return $this->sendResponse([], 'Penagihan deleted successfully.');
+    }
+
+    public function getRekeningWithStatus()
+    {
+        $rekening = Rekening::select("rekenings.*")
+                            ->selectRaw("ifnull(count(kelas.id), 0) as status") 
+                            ->leftJoin('penagihans', 'penagihans.rekening_id', '=', 'rekenings.id')
+                            ->leftJoin('kelas', 'kelas.id', '=', 'penagihans.kelas_id')
+                            ->groupBy("rekenings.id")
+                            ->get();
+
+        return $this->sendResponse(new RekeningResource($rekening), 'Rekening retrieved successfully.');
     }
 
     public function removeByRekeningIdAndKelas($rekeningId, $kelasId)

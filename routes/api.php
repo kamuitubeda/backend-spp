@@ -4,14 +4,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\RegisterController;
-use App\Http\Controllers\API\ItemController; 
-use App\Http\Controllers\API\InstitusiController; 
-use App\Http\Controllers\API\KelasController; 
-use App\Http\Controllers\API\SantriController; 
-use App\Http\Controllers\API\TagihanController; 
-use App\Http\Controllers\API\RekeningController; 
-use App\Http\Controllers\API\RincianRekeningController; 
+use App\Http\Controllers\API\ItemController;
+use App\Http\Controllers\API\InstitusiController;
+use App\Http\Controllers\API\KelasController;
+use App\Http\Controllers\API\PenagihanController;
+use App\Http\Controllers\API\SantriController;
+use App\Http\Controllers\API\TagihanController;
+use App\Http\Controllers\API\RekeningController;
+use App\Http\Controllers\API\RincianRekeningController;
 use App\Http\Controllers\API\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,8 +33,10 @@ Route::middleware('auth:api')->group( function () {
     Route::post('logout', [UserController::class, 'logout']);
 
     Route::get('/santri/kelas/{id}', [SantriController::class, 'getSantriFromSpecificKelas']);
-    
+
+    Route::get('/rekening-penagihan/', [PenagihanController::class, 'getRekeningWithStatus']);
     Route::get('/rekening-total/', [RekeningController::class, 'getRekeningWithTotal']);
+    
     Route::get('/item/rekening/{id}', [RekeningController::class, 'getItemByRekening']);
     Route::get('/item/selected/{id}', [ItemController::class, 'selectedRekeningItem']);
     Route::get('/item/option/{id}', [ItemController::class, 'optionRekeningItem']);
