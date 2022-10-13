@@ -115,14 +115,36 @@ class RekeningController extends BaseController
         return $this->sendResponse(new RekeningResource($rekening), 'Rekening retrieved successfully.');
     }
 
+    public function getKelasByRekening($id)
+    {
+        $rekening = Rekening::join('penagihans', 'penagihans.rekening_id', '=', 'rekenings.id')
+                        ->join('kelas', 'kelas.id', '=', 'penagihans.kelas_id')
+                        ->where('rekenings.id', $id)
+                        ->get(['rekenings.*', 'kelas.nama as nama_kelas']);
+
+        return $this->sendResponse(new RekeningResource($rekening), 'Rekening retrieved successfully.');
+    }
+
     public function getRekeningWithTotal()
     {
         $rekening = Rekening::select("rekenings.*")
-                            ->selectRaw("ifnull(sum(items.harga),0) as total") 
+                            ->selectRaw("ifnull(sum(items.harga),0) as total")
                             ->leftJoin('rincian_rekenings', 'rincian_rekenings.rekening_id', '=', 'rekenings.id')
                             ->leftJoin('items', 'items.id', '=', 'rincian_rekenings.item_id')
                             ->groupBy("rekenings.id")
                             ->get();
+
+        return $this->sendResponse(new RekeningResource($rekening), 'Rekening retrieved successfully.');
+    }
+
+    public function getTotalRekening($id)
+    {
+        $rekening = Rekening::selectRaw("ifnull(sum(items.harga),0) as total")
+                            ->leftJoin('rincian_rekenings', 'rincian_rekenings.rekening_id', '=', 'rekenings.id')
+                            ->leftJoin('items', 'items.id', '=', 'rincian_rekenings.item_id')
+                            ->groupBy("rekenings.id")
+                            ->where("rekenings.id", $id)
+                            ->first();
 
         return $this->sendResponse(new RekeningResource($rekening), 'Rekening retrieved successfully.');
     }

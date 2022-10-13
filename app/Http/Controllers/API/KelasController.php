@@ -104,4 +104,28 @@ class KelasController extends BaseController
    
         return $this->sendResponse([], 'Kelas Deleted Successfully.');
     }
+
+    public function selectedRekeningKelas($id)
+    {
+        $kelas = Kelas::join('penagihans', 'penagihans.kelas_id', '=', 'kelas.id')
+                        ->join('rekenings', 'rekenings.id', '=', 'penagihans.rekening_id')
+                        ->where('rekenings.id', $id)
+                        ->get(['kelas.*']);
+        
+        return $this->sendResponse(new KelasResource($kelas), 'Kelas retrieved successfully.');
+    }
+
+    public function optionRekeningKelas($id)
+    {
+        $selected = Kelas::select('kelas.id')
+                        ->join('penagihans', 'penagihans.kelas_id', '=', 'kelas.id')
+                        ->join('rekenings', 'rekenings.id', '=', 'penagihans.rekening_id')
+                        ->where('rekenings.id', $id)
+                        ->get()->toArray();
+        
+        $kelas = Kelas::whereNotIn('id', $selected)
+                        ->get();
+        
+        return $this->sendResponse(new KelasResource($kelas), 'Kelas retrieved successfully.');
+    }
 }

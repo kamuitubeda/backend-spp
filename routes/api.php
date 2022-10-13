@@ -36,10 +36,16 @@ Route::middleware('auth:api')->group( function () {
 
     Route::get('/rekening-penagihan/', [PenagihanController::class, 'getRekeningWithStatus']);
     Route::get('/rekening-total/', [RekeningController::class, 'getRekeningWithTotal']);
+    Route::get('/rekening/total/{id}', [RekeningController::class, 'getTotalRekening']);
     
     Route::get('/item/rekening/{id}', [RekeningController::class, 'getItemByRekening']);
     Route::get('/item/selected/{id}', [ItemController::class, 'selectedRekeningItem']);
     Route::get('/item/option/{id}', [ItemController::class, 'optionRekeningItem']);
+
+    Route::get('/kelas/rekening/{id}', [RekeningController::class, 'getKelasByRekening']);
+    Route::get('/kelas/selected/{id}', [KelasController::class, 'selectedRekeningKelas']);
+    Route::get('/kelas/option/{id}', [KelasController::class, 'optionRekeningKelas']);
+
     Route::delete('/rincian-rekening/r/{rekeningId}/i/{itemId}', [RincianRekeningController::class, 'removeByRekeningIdAndItem']);
 
     Route::resource('item', ItemController::class);
