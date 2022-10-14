@@ -47,6 +47,7 @@ Route::middleware('auth:api')->group( function () {
     Route::get('/kelas/option/{id}', [KelasController::class, 'optionRekeningKelas']);
 
     Route::delete('/rincian-rekening/r/{rekeningId}/i/{itemId}', [RincianRekeningController::class, 'removeByRekeningIdAndItem']);
+    Route::delete('/penagihan/r/{rekeningId}/k/{kelasId}', [PenagihanController::class, 'removeByRekeningIdAndKelas']);
 
     Route::resource('item', ItemController::class);
     Route::resource('institusi', InstitusiController::class);
@@ -55,4 +56,5 @@ Route::middleware('auth:api')->group( function () {
     Route::resource('tagihan', TagihanController::class);
     Route::resource('rekening', RekeningController::class);
     Route::resource('rincian-rekening', RincianRekeningController::class);
+    Route::resource('penagihan', PenagihanController::class);
 });

@@ -108,7 +108,7 @@ class PenagihanController extends BaseController
     public function getRekeningWithStatus()
     {
         $rekening = Rekening::select("rekenings.*")
-                            ->selectRaw("ifnull(count(kelas.id), 0) as status") 
+                            ->selectRaw("ifnull(count(kelas.id), 0) as status")
                             ->leftJoin('penagihans', 'penagihans.rekening_id', '=', 'rekenings.id')
                             ->leftJoin('kelas', 'kelas.id', '=', 'penagihans.kelas_id')
                             ->groupBy("rekenings.id")

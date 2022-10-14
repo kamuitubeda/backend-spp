@@ -105,7 +105,7 @@ class RincianRekeningController extends BaseController
 
     public function removeByRekeningIdAndItem($rekeningId, $itemId)
     {
-        $rincian = RincianRekening::where('rekening_id', $rekeningId)->where('item_id', $itemId)->delete();
+        RincianRekening::where('rekening_id', $rekeningId)->where('item_id', $itemId)->delete();
 
         return $this->sendResponse([], 'Rincian Rekening deleted successfully.');
     }
